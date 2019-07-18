@@ -11,19 +11,15 @@ import * as bcrypt from 'bcrypt';
 export class UserRepository extends Repository<User> {
   async signUp(authCredentialDto: AuthCredentialDto) {
     const { username, password } = authCredentialDto;
-    // const salt = await bcrypt.genSalt();
 
     const user = new User();
     user.username = username;
     user.salt = await bcrypt.genSalt();
-    // console.log(user.salt);
     user.password = await this.hashPassword(password, user.salt);
-
-    // console.log(user.password);
+    
     try {
       await user.save();
     } catch (error) {
-      // console.log(error.code);
       if (error.code === '23505') {
         // duplicate username
         throw new ConflictException('Username already exist');
