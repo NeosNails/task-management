@@ -19,7 +19,6 @@ export class AuthController {
   signUp(
     @Body(ValidationPipe) authCredentialDto: AuthCredentialDto,
   ): Promise<void> {
-    // console.log(authCredentialDto);
     return this.authService.signUp(authCredentialDto);
   }
 
@@ -27,13 +26,11 @@ export class AuthController {
   signIn(
     @Body(ValidationPipe) authCredentialDto: AuthCredentialDto,
   ): Promise<{ accessToken: string }> {
-    // console.log(authCredentialDto);
     return this.authService.signIn(authCredentialDto);
   }
 
   @Post('/test')
   @UseGuards(AuthGuard())
   test(@GetUser() user: User) {
-    // console.log(user);
   }
 }
